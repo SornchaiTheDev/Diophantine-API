@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cartesian-product": "^2.1.2",
+    "esm": "^3.2.25",
+    "js-combinatorics": "^1.5.3",
+    "prompt": "^1.1.0"
+  }
+}
