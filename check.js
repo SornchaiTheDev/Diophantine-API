@@ -1,6 +1,6 @@
 const prompt = require("prompt");
 require = require("esm")(module);
-var Combinatorics = require("js-combinatorics");
+
 
 const bezout = (int1, int2) => {
   let a = int1,
