@@ -1,7 +1,6 @@
 const prompt = require("prompt");
 require = require("esm")(module);
 
-
 const bezout = (int1, int2) => {
   let a = int1,
     originala = int1;
@@ -106,7 +105,13 @@ const findTwoPos = (input, inputs, find, P0, norm) => {
       x += alpha;
     }
   }
-
+  console.log("--------");
+  console.log("0 :" + P0);
+  console.log("norm :" + norm);
+  console.log("alpha :" + alpha);
+  console.log("round : " + round);
+  console.log(results);
+  console.log("--------");
   return results;
 };
 
@@ -138,6 +143,14 @@ const findNPos = (remain, find, P0, norm) => {
       x += alpha;
     }
   }
+
+  console.log("--------");
+  console.log("0 :" + P0);
+  console.log("norm :" + norm);
+  console.log("alpha :" + alpha);
+  console.log("round : " + round);
+  console.log(results);
+  console.log("--------");
 
   return results;
 };
@@ -191,7 +204,7 @@ prompt.get(["input"], (err, result) => {
     });
     let save = [];
     let result = [];
-    console.log(nPos);
+    //console.log(nPos);
     while (nPos.length > 0) {
       nPos[0].map((n) => {
         allPos.map((data) => save.push([...data, n]));
