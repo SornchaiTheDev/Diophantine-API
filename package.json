@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "cartesian-product": "^2.1.2",
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "js-combinatorics": "^1.5.3",

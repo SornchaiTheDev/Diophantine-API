@@ -33,10 +33,15 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
   return final;
 };
-const p = [3, 4, 5, 6,7,8,9,10];
-const result = find({ p, ans: 11, origin: p });
-console.log(result);
-result.map((data) => {
-  console.log(data);
-  console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
+const p = [3, 4, 5, 6];
+const results = find({ p, ans: 7, origin: p });
+
+results.map((result) => {
+  const distance = result.reduce((acc, now) => acc + now * now, 0);
+  result.push({ distance });
 });
+
+const final = results.sort(
+  (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
+);
+console.log(final[0]);

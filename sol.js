@@ -34,5 +34,18 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 };
 
 module.exports.recursive = ({ p, ans, origin }) => {
-  return find({ p: p, ans: ans, origin: p });
+  const results = find({ p: p, ans: ans, origin: p });
+
+  results.map((result) => {
+    const distance = result.reduce((acc, now) => acc + now * now, 0);
+    result.push({ distance });
+  });
+
+  const final = results.sort(
+    (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
+  );
+  const twenty = results
+    .filter((data, index) => index < 20)
+    .map((data) => data.slice(0, -1));
+  return { results: twenty, final: final[0] };
 };
