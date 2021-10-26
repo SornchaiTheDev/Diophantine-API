@@ -7,7 +7,6 @@ const { nFormular, twoFormular } = require("./functions");
  */
 
 const find = ({ p, ans, xn = [], origin, final = [] }) => {
-  // console.log(p);
   if (p.length <= 2) {
     const reverse = xn.reverse();
     final.push(
@@ -33,10 +32,7 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
   return final;
 };
-const p = [3, 4, 5, 6,7,8,9,10];
-const result = find({ p, ans: 11, origin: p });
-console.log(result);
-result.map((data) => {
-  console.log(data);
-  console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
-});
+
+module.exports.recursive = ({ p, ans, origin }) => {
+  return find({ p: p, ans: ans, origin: p });
+};

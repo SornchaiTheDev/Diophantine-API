@@ -132,10 +132,10 @@ prompt.start();
 // prompt.get(["input"], (err, result) => {
 console.time();
 // const { input } = result;
-const input = "258,147,369";
+const input = "3,4,5,6,7";
 const inputs = input.split(",");
 const xn = inputs.slice(0, -1).map((data) => parseInt(data));
-const answer = inputs[inputs.length - 1];
+const answer = parseInt(inputs[inputs.length - 1]);
 const results = [];
 
 if (xn.length === 2) {
@@ -150,6 +150,7 @@ if (xn.length === 3) {
     );
   });
 }
+
 if (xn.length === 4) {
   nFormular(answer, xn.slice(0, -1), xn).map((result1, lastans) => {
     let ans = answer - result1 * xn[xn.length - 1];
@@ -158,24 +159,28 @@ if (xn.length === 4) {
       let anss = ans - result2 * xn[xn.length - 2];
 
       results.push(
-        ...twoFormular(anss, [xn[0], xn[1]]).map((res) =>
-          res.concat(result2, result1)
-        )
+        ...twoFormular(anss, [xn[0], xn[1]]).map((res) => {
+          return res.concat(result2, result1);
+        })
       );
     });
   });
 }
+console.log(results);
 if (xn.length === 5) {
   nFormular(answer, xn.slice(0, -1), xn).map((result1, lastans) => {
     const ans = answer - result1 * xn[xn.length - 1];
+
     nFormular(ans, xn.slice(0, -2), xn).map((result2) => {
       const anss = ans - result2 * xn[xn.length - 2];
+
       nFormular(ans, xn.slice(0, -3), xn).map((result3) => {
         const ansss = anss - result3 * xn[xn.length - 3];
+
         results.push(
-          ...twoFormular(ansss, [xn[0], xn[1]]).map((res) =>
-            res.concat(result3, result2, result1)
-          )
+          ...twoFormular(ansss, [xn[0], xn[1]]).map((res) => {
+            res.concat(result3, result2, result1);
+          })
         );
       });
     });
@@ -211,8 +216,9 @@ if (xn.length === 7) {
         const ans3 = ans2 - result3 * xn[xn.length - 3];
         nFormular(ans3, xn.slice(0, -4), xn).map((result4) => {
           const ans4 = ans3 - result4 * xn[xn.length - 4];
-          nFormular(ans4, xn.slice(0, -4), xn).map((result5) => {
+          nFormular(ans4, xn.slice(0, -5), xn).map((result5) => {
             const ans5 = ans4 - result5 * xn[xn.length - 5];
+
             results.push(
               ...twoFormular(ans5, [xn[0], xn[1]]).map((res) =>
                 res.concat(result5, result4, result3, result2, result1)
@@ -261,20 +267,27 @@ if (xn.length === 8) {
 if (xn.length === 9) {
   nFormular(answer, xn.slice(0, -1), xn).map((result1) => {
     const ans1 = answer - result1 * xn[xn.length - 1];
+
     nFormular(ans1, xn.slice(0, -2), xn).map((result2) => {
       const ans2 = ans1 - result2 * xn[xn.length - 2];
+
       nFormular(ans2, xn.slice(0, -3), xn).map((result3) => {
         const ans3 = ans2 - result3 * xn[xn.length - 3];
+
         nFormular(ans3, xn.slice(0, -4), xn).map((result4) => {
           const ans4 = ans3 - result4 * xn[xn.length - 4];
+
           nFormular(ans4, xn.slice(0, -5), xn).map((result5) => {
             const ans5 = ans4 - result5 * xn[xn.length - 5];
+
             nFormular(ans5, xn.slice(0, -6), xn).map((result6) => {
               const ans6 = ans5 - result6 * xn[xn.length - 6];
+
               nFormular(ans6, xn.slice(0, -7), xn).map((result7) => {
                 const ans7 = ans6 - result7 * xn[xn.length - 7];
+
                 results.push(
-                  ...twoFormular(ans7, [xn[0], xn[1]]).map((res) =>
+                  ...twoFormular(ans7, [xn[0], xn[1]]).map((res) => {
                     res.concat(
                       result7,
                       result6,
@@ -283,8 +296,8 @@ if (xn.length === 9) {
                       result3,
                       result2,
                       result1
-                    )
-                  )
+                    );
+                  })
                 );
               });
             });
@@ -1186,46 +1199,48 @@ if (xn.length === 21) {
     });
   });
 }
-
-if (xn.length > 2) {
-}
+// console.log(results);
 
 //find from result
-const findans = results.map((result) => result.toString());
+// const findans = results.map((result) => result.toString());
+// results.map((data) => {
+//   console.log(data);
+//   console.log(data.reduce((acc, now, index) => acc + now * xn[index], 0));
+// });
 
-console.log(findans);
+// console.log(findans);
 
-console.log(findans.find((data) => data === "-3,-3,-3,0,-3,2,-2"));
+// console.log(findans.find((data) => data === "-3,-3,-3,0,-3,2,-2"));
 
-const ans = results.map((result, index) => {
-  return result
-    .map((pos, index) => ({ pos: pos * pos, index: index }))
-    .reduce((acc, current) => acc + current.pos, 0);
-});
+// const ans = results.map((result, index) => {
+//   return result
+//     .map((pos, index) => ({ pos: pos * pos, index: index }))
+//     .reduce((acc, current) => acc + current.pos, 0);
+// });
 
-const anss = ans.map((value, index) => results[index].concat({ pos: value }));
+// const anss = ans.map((value, index) => results[index].concat({ pos: value }));
 
-const final = anss.sort((a, b) => a[a.length - 1].pos - b[b.length - 1].pos);
+// const final = anss.sort((a, b) => a[a.length - 1].pos - b[b.length - 1].pos);
 
-console.log(results.slice(0, 10));
+// console.log(results.slice(0, 10));
 
-const variables = [...xn];
-"abcdefghijklmnopqrstuvwxyz".split("").map((variable, index) => {
-  if (index < variables.length)
-    variables[index] = `${variables[index]}${variable}`;
-});
+// const variables = [...xn];
+// "abcdefghijklmnopqrstuvwxyz".split("").map((variable, index) => {
+//   if (index < variables.length)
+//     variables[index] = `${variables[index]}${variable}`;
+// });
 
-const showans = final[0]
-  .slice(0, -1)
-  .map((ans, index) => `(${xn[index]})(${ans})`);
+// const showans = final[0]
+//   .slice(0, -1)
+//   .map((ans, index) => `(${xn[index]})(${ans})`);
 
-console.log("sum : " + final[0][final[0].length - 1].pos);
-console.log("-----------");
-console.log(final[0].slice(0, -1));
-console.log("-----------");
-console.log(variables.join("+") + "=" + answer);
-console.log(showans.join("+") + "=" + answer);
-console.log("-----------");
+// console.log("sum : " + final[0][final[0].length - 1].pos);
+// console.log("-----------");
+// console.log(final[0].slice(0, -1));
+// console.log("-----------");
+// console.log(variables.join("+") + "=" + answer);
+// console.log(showans.join("+") + "=" + answer);
+// console.log("-----------");
 
-console.timeEnd();
+// console.timeEnd();
 // });
