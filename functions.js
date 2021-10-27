@@ -1,27 +1,32 @@
 const bezout = (int1, int2) => {
   let a = int1;
   let b = int2;
-  let q = Math.floor(a / b),
-    r = a % b,
-    s1 = 1,
-    s2 = 0,
-    s3 = s1 - q * s2,
-    t1 = 0;
-  t2 = 1;
-  t3 = t1 - q * t2;
-  while (true) {
-    if (r === 0) break;
-    a = b;
-    b = r;
-    r = a % b;
+
+  let q = 0;
+  let r = 1;
+  let s1 = 1;
+  let s2 = 0;
+  let s3 = 1;
+  let t1 = 0;
+  let t2 = 1;
+  let t3 = 0;
+
+  while (r > 0) {
     q = Math.floor(a / b);
-    s1 = s2;
-    s2 = s3;
+    r = a - q * b;
     s3 = s1 - q * s2;
-    t1 = t2;
-    t2 = t3;
     t3 = t1 - q * t2;
+
+    if (r > 0) {
+      a = b;
+      b = r;
+      s1 = s2;
+      s2 = s3;
+      t1 = t2;
+      t2 = t3;
+    }
   }
+
   return { b, sum: [s2, t2] };
 };
 

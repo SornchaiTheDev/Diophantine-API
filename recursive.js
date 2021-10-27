@@ -33,11 +33,11 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
   return final;
 };
-const p = [3, -8, 7];
-const results = find({ p, ans: 10, origin: p });
+const p = [3, -8];
+const results = find({ p, ans: 15, origin: p });
 
-console.log(firstStep(p, 15));
-// console.log(results);
+// console.log(firstStep(p, 15));
+console.log(results);
 // results.map((data) => {
 //   console.log(data);
 //   console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
