@@ -1,10 +1,4 @@
 const { nFormular, twoFormular } = require("./functions");
-/**
- *
- * expect :  [ 0, 7, 5 ], [ 15, -7, 5 ] ]
- *           [ [ -1, 10, 3 ], [ 14, -4, 3 ] ]
- *
- */
 
 const find = ({ p, ans, xn = [], origin, final = [] }) => {
   if (p.length <= 2) {
@@ -19,7 +13,6 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
   }
   nFormular(ans, p.slice(0, -1), p).map((result) => {
     let result_ans = ans - result * p[p.length - 1];
-    // console.log(result_ans);
 
     find({
       p: p.slice(0, -1),

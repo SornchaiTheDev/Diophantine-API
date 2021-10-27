@@ -67,6 +67,12 @@ const Normequation = (c, ...values) => {
   return sigmaAll;
 };
 
+module.exports.firstStep = (xn, c) => {
+  const ans = ngcd(...xn);
+
+  return { var0: ans.result, gcd: ans.gcd, norm: Normequation(c, ...xn) };
+};
+
 const firstStep = (xn, c) => {
   const ans = ngcd(...xn);
 

@@ -1,4 +1,4 @@
-const { nFormular, twoFormular } = require("./functions");
+const { nFormular, twoFormular, firstStep } = require("./functions");
 /**
  *
  * expect :  [ 0, 7, 5 ], [ 15, -7, 5 ] ]
@@ -33,15 +33,22 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
   return final;
 };
-const p = [3, 4, 5, 6];
-const results = find({ p, ans: 7, origin: p });
+const p = [3, -8, 7];
+const results = find({ p, ans: 10, origin: p });
 
-results.map((result) => {
-  const distance = result.reduce((acc, now) => acc + now * now, 0);
-  result.push({ distance });
-});
+console.log(firstStep(p, 15));
+// console.log(results);
+// results.map((data) => {
+//   console.log(data);
+//   console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
+// });
 
-const final = results.sort(
-  (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
-);
-console.log(final[0]);
+// results.map((result) => {
+//   const distance = result.reduce((acc, now) => acc + now * now, 0);
+//   result.push({ distance });
+// });
+
+// const final = results.sort(
+//   (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
+// );
+// console.log(results);
