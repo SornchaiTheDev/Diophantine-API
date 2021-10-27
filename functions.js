@@ -1,6 +1,6 @@
 const bezout = (int1, int2) => {
-  let a = Math.abs(int1);
-  let b = Math.abs(int2);
+  let a = int1;
+  let b = int2;
 
   let q = 0;
   let r = 1;
@@ -12,7 +12,7 @@ const bezout = (int1, int2) => {
   let t3 = 0;
 
   while (r > 0) {
-    q = Math.floor(a / b);
+    q = b < 0 ? Math.ceil(a / b) : Math.floor(a / b);
     r = a - q * b;
     s3 = s1 - q * s2;
     t3 = t1 - q * t2;
@@ -27,7 +27,8 @@ const bezout = (int1, int2) => {
     }
   }
 
-  return { b, sum: [Math.abs(s2), Math.abs(t2)] };
+  return { b, sum: [s2, t2] };
+  // return { b, sum: [Math.abs(s2), Math.abs(t2)] };
 };
 
 const ngcd = (...input) => {
@@ -66,8 +67,6 @@ const ngcd = (...input) => {
   return { result: finalResult, gcd: lastNum };
 };
 
-// console.log(ngcd(15, -6, 10));
-
 const Normequation = (c, ...values) => {
   let sum = values.reduce((prev, current) => Math.pow(current, 2) + prev, 0);
 
@@ -77,14 +76,14 @@ const Normequation = (c, ...values) => {
   return sigmaAll;
 };
 
-module.exports.firstStep = (xn, c) => {
+const firstStep = (xn, c) => {
   const ans = ngcd(...xn);
-
   return { var0: ans.result, gcd: ans.gcd, norm: Normequation(c, ...xn) };
 };
 
-const firstStep = (xn, c) => {
+module.exports.firstStep = (xn, c) => {
   const ans = ngcd(...xn);
+
   return { var0: ans.result, gcd: ans.gcd, norm: Normequation(c, ...xn) };
 };
 

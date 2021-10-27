@@ -33,8 +33,8 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
   return final;
 };
-const p = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const results = find({ p, ans: 10, origin: p });
+const p = [15, -6];
+const results = find({ p, ans: 21, origin: p });
 
 const finalAns = results.filter((result) => {
   if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
@@ -57,4 +57,4 @@ const takeAllSameDistance = final.filter(
     result[result.length - 1].distance ===
     final[0][final[0].length - 1].distance
 );
-console.log(takeAllSameDistance);
+console.log(results);
