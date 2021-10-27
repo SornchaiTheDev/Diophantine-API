@@ -65,161 +65,162 @@ const ngcd = (...input) => {
   return { result: finalResult, gcd: lastNum };
 };
 
-const Normequation = (c, ...values) => {
-  let sum = values.reduce((prev, current) => Math.pow(current, 2) + prev, 0);
+console.log(ngcd(15, -6, 21));
+// const Normequation = (c, ...values) => {
+//   let sum = values.reduce((prev, current) => Math.pow(current, 2) + prev, 0);
 
-  let sigmaAll = values.map((variable) => {
-    return parseFloat(((variable * c) / sum).toFixed(4));
-  });
-  return sigmaAll;
-};
+//   let sigmaAll = values.map((variable) => {
+//     return parseFloat(((variable * c) / sum).toFixed(4));
+//   });
+//   return sigmaAll;
+// };
 
-const findTwoPos = (input, inputs, find, P0, norm) => {
-  const remain = inputs.filter((data) => data !== input);
+// const findTwoPos = (input, inputs, find, P0, norm) => {
+//   const remain = inputs.filter((data) => data !== input);
 
-  const alpha = remain[0] / find.gcd;
-  let round = 0;
+//   const alpha = remain[0] / find.gcd;
+//   let round = 0;
 
-  const results = [];
+//   const results = [];
 
-  let x = P0;
+//   let x = P0;
 
-  if (x > norm) {
-    while (x > norm) {
-      results.push(x);
-      x -= alpha;
-      round++;
-    }
-    for (let i = 0; i <= round; i++) {
-      results.push(x);
-      x -= alpha;
-    }
-  } else {
-    while (x < norm) {
-      results.push(x);
-      x += alpha;
-      round++;
-    }
-    for (let i = 0; i <= round; i++) {
-      results.push(x);
-      x += alpha;
-    }
-  }
-  console.log("--------");
-  console.log("0 :" + P0);
-  console.log("norm :" + norm);
-  console.log("alpha :" + alpha);
-  console.log("round : " + round);
-  console.log(results);
-  console.log("--------");
-  return results;
-};
+//   if (x > norm) {
+//     while (x > norm) {
+//       results.push(x);
+//       x -= alpha;
+//       round++;
+//     }
+//     for (let i = 0; i <= round; i++) {
+//       results.push(x);
+//       x -= alpha;
+//     }
+//   } else {
+//     while (x < norm) {
+//       results.push(x);
+//       x += alpha;
+//       round++;
+//     }
+//     for (let i = 0; i <= round; i++) {
+//       results.push(x);
+//       x += alpha;
+//     }
+//   }
+//   console.log("--------");
+//   console.log("0 :" + P0);
+//   console.log("norm :" + norm);
+//   console.log("alpha :" + alpha);
+//   console.log("round : " + round);
+//   console.log(results);
+//   console.log("--------");
+//   return results;
+// };
 
-const findNPos = (remain, find, P0, norm) => {
-  const alpha = remain / find.gcd;
+// const findNPos = (remain, find, P0, norm) => {
+//   const alpha = remain / find.gcd;
 
-  const results = [];
+//   const results = [];
 
-  let round = 0;
-  let x = P0;
-  if (x > norm) {
-    while (x > norm) {
-      results.push(x);
-      x -= alpha;
-      round++;
-    }
-    for (let i = 0; i <= round; i++) {
-      results.push(x);
-      x -= alpha;
-    }
-  } else {
-    while (x < norm) {
-      results.push(x);
-      x += alpha;
-      round++;
-    }
-    for (let i = 0; i <= round; i++) {
-      results.push(x);
-      x += alpha;
-    }
-  }
+//   let round = 0;
+//   let x = P0;
+//   if (x > norm) {
+//     while (x > norm) {
+//       results.push(x);
+//       x -= alpha;
+//       round++;
+//     }
+//     for (let i = 0; i <= round; i++) {
+//       results.push(x);
+//       x -= alpha;
+//     }
+//   } else {
+//     while (x < norm) {
+//       results.push(x);
+//       x += alpha;
+//       round++;
+//     }
+//     for (let i = 0; i <= round; i++) {
+//       results.push(x);
+//       x += alpha;
+//     }
+//   }
 
-  console.log("--------");
-  console.log("0 :" + P0);
-  console.log("norm :" + norm);
-  console.log("alpha :" + alpha);
-  console.log("round : " + round);
-  console.log(results);
-  console.log("--------");
+//   console.log("--------");
+//   console.log("0 :" + P0);
+//   console.log("norm :" + norm);
+//   console.log("alpha :" + alpha);
+//   console.log("round : " + round);
+//   console.log(results);
+//   console.log("--------");
 
-  return results;
-};
+//   return results;
+// };
 
-prompt.start();
-prompt.get(["input"], (err, result) => {
-  console.time();
-  const { input } = result;
-  const inputs = input.split(",");
-  const xn = inputs.slice(0, -1).map((data) => parseInt(data));
-  const answer = inputs[inputs.length - 1];
-  const find = ngcd(...xn);
-  const P0 = find.result.map((value) => (value * answer) / find.gcd);
-  const norm = Normequation(answer, ...xn);
+// prompt.start();
+// prompt.get(["input"], (err, result) => {
+//   console.time();
+//   const { input } = result;
+//   const inputs = input.split(",");
+//   const xn = inputs.slice(0, -1).map((data) => parseInt(data));
+//   const answer = inputs[inputs.length - 1];
+//   const find = ngcd(...xn);
+//   const P0 = find.result.map((value) => (value * answer) / find.gcd);
+//   const norm = Normequation(answer, ...xn);
 
-  const allPos = new Array(100).fill([]);
+//   const allPos = new Array(100).fill([]);
 
-  if (xn.length === 2) {
-    xn.map((value, index) =>
-      findTwoPos(value, xn, find, P0[index], norm[index]).map(
-        (result, index) => (allPos[index] = [...allPos[index], result])
-      )
-    );
-  } else {
-    const remain = ngcd(...xn.slice(0, -1)).gcd;
-    let allPos = [];
-    let x = [];
-    let y = [];
-    const nPos = [];
+//   if (xn.length === 2) {
+//     xn.map((value, index) =>
+//       findTwoPos(value, xn, find, P0[index], norm[index]).map(
+//         (result, index) => (allPos[index] = [...allPos[index], result])
+//       )
+//     );
+//   } else {
+//     const remain = ngcd(...xn.slice(0, -1)).gcd;
+//     let allPos = [];
+//     let x = [];
+//     let y = [];
+//     const nPos = [];
 
-    xn.map((value, index) => {
-      if (index > 1) {
-        nPos.push(findNPos(remain, find, P0[2], norm[2]));
-        // console.log(results);
+//     xn.map((value, index) => {
+//       if (index > 1) {
+//         nPos.push(findNPos(remain, find, P0[2], norm[2]));
+//         // console.log(results);
 
-        // findNPos(remain, find, P0[2], norm[2]).map(
-        //   (result, index) => (allPos[index] = [...allPos[index], result])
-        // );
-      } else {
-        if (index === 0)
-          x = findTwoPos(value, xn, find, P0[index], norm[index]);
-        if (index === 1)
-          y = findTwoPos(value, xn, find, P0[index], norm[index]);
-        // findTwoPos(value, xn, find, P0[index], norm[index]).map(
-        //   (result, index) => (allPos[index] = [...allPos[index], result])
-        // );
-      }
-    });
-    x.map((value, index) => {
-      allPos[index] = [value, y[index]];
-    });
-    let save = [];
-    let result = [];
-    //console.log(nPos);
-    while (nPos.length > 0) {
-      nPos[0].map((n) => {
-        allPos.map((data) => save.push([...data, n]));
-      });
-      nPos.shift();
-      if (nPos.length === 0) result = save;
-      allPos = save;
-      save = [];
-    }
+//         // findNPos(remain, find, P0[2], norm[2]).map(
+//         //   (result, index) => (allPos[index] = [...allPos[index], result])
+//         // );
+//       } else {
+//         if (index === 0)
+//           x = findTwoPos(value, xn, find, P0[index], norm[index]);
+//         if (index === 1)
+//           y = findTwoPos(value, xn, find, P0[index], norm[index]);
+//         // findTwoPos(value, xn, find, P0[index], norm[index]).map(
+//         //   (result, index) => (allPos[index] = [...allPos[index], result])
+//         // );
+//       }
+//     });
+//     x.map((value, index) => {
+//       allPos[index] = [value, y[index]];
+//     });
+//     let save = [];
+//     let result = [];
+//     //console.log(nPos);
+//     while (nPos.length > 0) {
+//       nPos[0].map((n) => {
+//         allPos.map((data) => save.push([...data, n]));
+//       });
+//       nPos.shift();
+//       if (nPos.length === 0) result = save;
+//       allPos = save;
+//       save = [];
+//     }
 
-    result.map((data) => console.log(data));
-  }
+//     result.map((data) => console.log(data));
+//   }
 
-  // console.log(allPos);
-  // console.log(allPos.filter((value) => value.length === allPos[0].length));
+//   // console.log(allPos);
+//   // console.log(allPos.filter((value) => value.length === allPos[0].length));
 
-  console.timeEnd();
-});
+//   console.timeEnd();
+// });

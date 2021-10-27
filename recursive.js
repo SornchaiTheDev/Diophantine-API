@@ -33,22 +33,28 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
   return final;
 };
-const p = [3, -8];
-const results = find({ p, ans: 15, origin: p });
+const p = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const results = find({ p, ans: 10, origin: p });
 
-// console.log(firstStep(p, 15));
-console.log(results);
-// results.map((data) => {
-//   console.log(data);
-//   console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
-// });
+const finalAns = results.filter((result) => {
+  if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
+    return result;
+});
 
-// results.map((result) => {
-//   const distance = result.reduce((acc, now) => acc + now * now, 0);
-//   result.push({ distance });
-// });
+finalAns.map((result) => {
+  const distance = result.reduce((acc, now) => acc + now * now, 0);
+  result.push({ distance });
+});
 
-// const final = results.sort(
-//   (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
-// );
-// console.log(results);
+const final = finalAns.sort(
+  (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
+);
+const twenty = finalAns
+  .filter((data, index) => index < 20)
+  .map((data) => data.slice(0, -1));
+const takeAllSameDistance = final.filter(
+  (result, index) =>
+    result[result.length - 1].distance ===
+    final[0][final[0].length - 1].distance
+);
+console.log(takeAllSameDistance);

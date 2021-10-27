@@ -1,16 +1,27 @@
 const express = require("express");
 const app = express();
 const { recursive } = require("./sol");
+const { check } = require("./new_check");
 const cors = require("cors");
 
 app.use(cors());
 app.get("/", (req, res) => {
-  const problem = req.query.problem.split(",");
+  console.log(req.query);
+  if (req.query.type === "problem") {
+    const problem = req.query.p.split(",");
 
-  const p = problem.slice(0, -1).map((data) => parseInt(data));
-  const ans = problem[problem.length - 1];
-  const { results, final } = recursive({ p: p, ans: ans, origin: p });
-  return res.json({ results, final });
+    const p = problem.slice(0, -1).map((data) => parseInt(data));
+    const ans = problem[problem.length - 1];
+    const { results, final } = recursive({ p: p, ans: ans, origin: p });
+    return res.json({ results, final });
+  } else {
+    const problem = req.query.p.split(",");
+    const p = problem.slice(0, -1).map((data) => parseInt(data));
+    const ans = problem[problem.length - 1];
+    console.log(p);
+    const checking = check({ p, ans });
+    res.json(checking);
+  }
 });
 
 app.listen(8080, () => {

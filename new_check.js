@@ -1,88 +1,18 @@
-const { firstStep, twoFormular } = require("./functions");
-const bezout = (int1, int2) => {
-  let a = int1;
-  let b = int2;
+const prompt = require("prompt");
+require = require("esm")(module);
+const { firstStep } = require("./functions");
 
-  let q = 0;
-  let r = 1;
-  let s1 = 1;
-  let s2 = 0;
-  let s3 = 1;
-  let t1 = 0;
-  let t2 = 1;
-  let t3 = 0;
+const nFormular = ({ n0, Nnorm, gcd, initGCD, p }) => {
+  // console.log("P len:" + p.length);
+  // console.log("GCD :" + gcd);
 
-  while (r > 0) {
-    q = Math.floor(a / b);
-    r = a - q * b;
-    s3 = s1 - q * s2;
-    t3 = t1 - q * t2;
-
-    if (r > 0) {
-      a = b;
-      b = r;
-      s1 = s2;
-      s2 = s3;
-      t1 = t2;
-      t2 = t3;
-    }
-  }
-
-  return { b, sum: [s2, t2] };
-};
-const p = [3, 7, -8];
-const ans = 15;
-
-const ngcd = (...input) => {
-  const orderNum = input.sort((a, b) => a - b);
-
-  let round = 2;
-  let result = [];
-  let double = bezout(orderNum[0], orderNum[1]);
-  let oddpos = 1;
-
-  let lastNum = double.b;
-  double.sum.map((num) => result.push(num));
-
-  const inputLength = input.length;
-
-  if (inputLength === 2) return { result, gcd: lastNum };
-
-  while (true) {
-    if (orderNum[round] === undefined) break;
-    let ans = bezout(lastNum, orderNum[round]);
-    lastNum = ans.b;
-    ans.sum.map((num, index) => {
-      if (index === 0) oddpos *= num;
-      if (index % 2) return result.push(num);
-    });
-    round++;
-  }
-
-  const finalResult = result.map((value, index) => {
-    if (index !== result.length - 1) return value * oddpos;
-    return value;
-  });
-
-  return { result: finalResult, gcd: lastNum };
-};
-
-/**
- *
- * 3x+4y+5z = 6
- * 3x+4y = 6-5z
- * find z1-zn from z0-znorm (range alpha)
- * back to 3x+4y = w
- * use 2 formular to solve
- *
- *
- */
-
-const nFormular = ({ n0, Nnorm, gcd, initGCD }) => {
-  const alpha = gcd / initGCD;
+  // console.log(p[0]);
+  const toalpha = p.length === 2 ? Math.abs(p[0]) : gcd;
+  const alpha = toalpha / gcd;
   const results = [];
 
-  //   console.log("n0 :" + n0, "Nnorm : " + Nnorm, "Alpha : " + alpha);
+  // console.log("toalpha :" + toalpha);
+  // console.log("n0 :" + n0, "Nnorm : " + Nnorm, "Alpha : " + alpha);
   let round = 0;
   let x = n0;
   if (x > Nnorm) {
@@ -110,7 +40,16 @@ const nFormular = ({ n0, Nnorm, gcd, initGCD }) => {
   return results;
 };
 
-const solve = ({ p, origin, ans, initGCD, final = [], result = [], norm }) => {
+const solve = ({
+  n0,
+  p,
+  origin,
+  ans,
+  initGCD,
+  final = [],
+  result = [],
+  norm,
+}) => {
   if (p.length <= 1) {
     const reverse = result.reverse();
     const answer = ans / origin[0];
@@ -132,6 +71,7 @@ const solve = ({ p, origin, ans, initGCD, final = [], result = [], norm }) => {
   const P0 = var0.map((value) => (value * ans) / initGCD);
 
   nFormular({
+    p,
     n0: P0[P0.length - 1],
     Nnorm: norm[P0.length - 1],
     ans,
@@ -139,7 +79,7 @@ const solve = ({ p, origin, ans, initGCD, final = [], result = [], norm }) => {
     initGCD,
   }).map((nResult) => {
     const answer = ans - nResult * origin[P0.length - 1];
-
+    // console.log(p.slice(0, -1));
     solve({
       p: p.slice(0, -1),
       ans: answer,
@@ -154,15 +94,36 @@ const solve = ({ p, origin, ans, initGCD, final = [], result = [], norm }) => {
   return final;
 };
 
-const { gcd, norm } = firstStep(p, ans);
+// prompt.start();
+// prompt.get(["input"], (err, result) => {
+//   const { input } = result;
+//   const inputs = input.split(",");
+//   const p = inputs.slice(0, -1).map((data) => parseInt(data));
+//   const ans = inputs[inputs.length - 1];
 
-const results = solve({ p, ans, origin: p, initGCD: gcd, norm });
-const finalAns = results.filter((result) => {
-  if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
-    return result;
-});
-console.log(finalAns);
-// results.map((data) => {
-//   console.log(data);
-//   console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
+//   const { gcd, norm } = firstStep(p, ans);
+
+//   const results = solve({ p, ans, origin: p, initGCD: gcd, norm });
+//   console.log(results);
+//   // results.map((data) => console.log(data));
+
+//   // const finalAns = results.filter((result) => {
+//   //   if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
+//   //     return result;
+//   // });
+//   // console.log(finalAns);
+//   // results.map((data) => {
+//   //   console.log(data);
+//   //   console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
+//   // });
 // });
+
+module.exports.check = ({ p, ans }) => {
+  const { gcd, norm } = firstStep(p, ans);
+  const results = solve({ p, ans, origin: p, initGCD: gcd, norm });
+  const finalAns = results.filter((result) => {
+    if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
+      return result;
+  });
+  return finalAns;
+};

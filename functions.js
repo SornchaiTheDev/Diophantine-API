@@ -1,6 +1,6 @@
 const bezout = (int1, int2) => {
-  let a = int1;
-  let b = int2;
+  let a = Math.abs(int1);
+  let b = Math.abs(int2);
 
   let q = 0;
   let r = 1;
@@ -27,14 +27,17 @@ const bezout = (int1, int2) => {
     }
   }
 
-  return { b, sum: [s2, t2] };
+  return { b, sum: [Math.abs(s2), Math.abs(t2)] };
 };
 
 const ngcd = (...input) => {
-  const orderNum = input.sort((a, b) => a - b);
+  // const orderNum = input.sort((a, b) => a - b);
+
   let round = 2;
   let result = [];
-  let double = bezout(orderNum[0], orderNum[1]);
+
+  let double = bezout(input[0], input[1]);
+  // let double = bezout(orderNum[0], orderNum[1]);
   let oddpos = 1;
 
   let lastNum = double.b;
@@ -45,8 +48,8 @@ const ngcd = (...input) => {
   if (inputLength === 2) return { result, gcd: lastNum };
 
   while (true) {
-    if (orderNum[round] === undefined) break;
-    let ans = bezout(lastNum, orderNum[round]);
+    if (input[round] === undefined) break;
+    let ans = bezout(lastNum, input[round]);
     lastNum = ans.b;
     ans.sum.map((num, index) => {
       if (index === 0) oddpos *= num;
@@ -62,6 +65,8 @@ const ngcd = (...input) => {
 
   return { result: finalResult, gcd: lastNum };
 };
+
+// console.log(ngcd(15, -6, 10));
 
 const Normequation = (c, ...values) => {
   let sum = values.reduce((prev, current) => Math.pow(current, 2) + prev, 0);
@@ -80,7 +85,6 @@ module.exports.firstStep = (xn, c) => {
 
 const firstStep = (xn, c) => {
   const ans = ngcd(...xn);
-
   return { var0: ans.result, gcd: ans.gcd, norm: Normequation(c, ...xn) };
 };
 

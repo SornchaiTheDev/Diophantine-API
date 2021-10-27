@@ -28,17 +28,28 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
 module.exports.recursive = ({ p, ans, origin }) => {
   const results = find({ p: p, ans: ans, origin: p });
+  console.log(results);
+  const finalAns = results.filter((result) => {
+    if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
+      return result;
+  });
 
-  results.map((result) => {
+  finalAns.map((result) => {
     const distance = result.reduce((acc, now) => acc + now * now, 0);
     result.push({ distance });
   });
 
-  const final = results.sort(
+  const final = finalAns.sort(
     (a, b) => a[a.length - 1].distance - b[b.length - 1].distance
   );
-  const twenty = results
+  const twenty = finalAns
     .filter((data, index) => index < 20)
     .map((data) => data.slice(0, -1));
-  return { results: twenty, final: final[0] };
+
+  const takeAllSameDistance = final.filter(
+    (result, index) =>
+      result[result.length - 1].distance ===
+      final[0][final[0].length - 1].distance
+  );
+  return { results: twenty, final: takeAllSameDistance };
 };
