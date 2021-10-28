@@ -6,5 +6,27 @@
     "express": "^4.17.1",
     "js-combinatorics": "^1.5.3",
     "prompt": "^1.1.0"
-  }
+  },
+  "name": "mathproject",
+  "version": "1.0.0",
+  "description": "Diophantine Solver",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SornchaiTheDev/MathProject.git"
+  },
+  "keywords": [
+    "diophantine"
+  ],
+  "author": "SornchaiTheDev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SornchaiTheDev/MathProject/issues"
+  },
+  "homepage": "https://github.com/SornchaiTheDev/MathProject#readme"
 }

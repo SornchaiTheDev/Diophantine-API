@@ -1,4 +1,4 @@
-const { nFormular, twoFormular } = require("./functions");
+const { nFormular, twoFormular, firstStep } = require("./functions");
 
 const find = ({ p, ans, xn = [], origin, final = [] }) => {
   if (p.length <= 2) {
@@ -28,7 +28,7 @@ const find = ({ p, ans, xn = [], origin, final = [] }) => {
 
 module.exports.recursive = ({ p, ans, origin }) => {
   const results = find({ p: p, ans: ans, origin: p });
-  console.log(results);
+  // console.log(results);
   const finalAns = results.filter((result) => {
     if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
       return result;
@@ -51,5 +51,10 @@ module.exports.recursive = ({ p, ans, origin }) => {
       result[result.length - 1].distance ===
       final[0][final[0].length - 1].distance
   );
-  return { results: twenty, final: takeAllSameDistance };
+
+  return {
+    results: twenty,
+    final: takeAllSameDistance,
+    firstStep: firstStep(p, ans),
+  };
 };

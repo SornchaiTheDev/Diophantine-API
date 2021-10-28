@@ -12,8 +12,12 @@ app.get("/", (req, res) => {
 
     const p = problem.slice(0, -1).map((data) => parseInt(data));
     const ans = problem[problem.length - 1];
-    const { results, final } = recursive({ p: p, ans: ans, origin: p });
-    return res.json({ results, final });
+    const { results, final, firstStep } = recursive({
+      p: p,
+      ans: ans,
+      origin: p,
+    });
+    return res.json({ results, final, firstStep });
   } else {
     const problem = req.query.p.split(",");
     const p = problem.slice(0, -1).map((data) => parseInt(data));
@@ -23,7 +27,7 @@ app.get("/", (req, res) => {
     res.json(checking);
   }
 });
-
-app.listen(8080, () => {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
   console.log("Server Start at Port 8080");
 });
