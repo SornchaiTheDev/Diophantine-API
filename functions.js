@@ -76,6 +76,12 @@ const Normequation = (c, ...values) => {
   return sigmaAll;
 };
 
+module.exports.hasAns = (xn, c) => {
+  const { gcd } = ngcd(...xn);
+
+  return Number.isInteger(c / gcd);
+};
+
 const firstStep = (xn, c) => {
   const ans = ngcd(...xn);
   return { var0: ans.result, gcd: ans.gcd, norm: Normequation(c, ...xn) };
