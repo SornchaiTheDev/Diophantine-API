@@ -22,8 +22,8 @@ app.get("/", (req, res) => {
     });
     result = { results, final, firstStep };
   } else {
-    const checking = check({ p, ans });
-    result = checking;
+    const { finalAns, takeAllSameDistance } = check({ p, ans });
+    result = { check: finalAns, min: takeAllSameDistance };
   }
   return res.json(result);
 });

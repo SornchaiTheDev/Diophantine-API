@@ -2,17 +2,11 @@ const prompt = require("prompt");
 require = require("esm")(module);
 const { firstStep } = require("./functions");
 
-const nFormular = ({ n0, Nnorm, gcd, initGCD, p }) => {
-  // console.log("P len:" + p.length);
-  // console.log("GCD :" + gcd);
-
-  // console.log(p[0]);
+const nFormular = ({ n0, Nnorm, gcd, p }) => {
   const toalpha = p.length === 2 ? Math.abs(p[0]) : gcd;
   const alpha = toalpha / gcd;
   const results = [];
 
-  // console.log("toalpha :" + toalpha);
-  // console.log("n0 :" + n0, "Nnorm : " + Nnorm, "Alpha : " + alpha);
   let round = 0;
   let x = n0;
   if (x > Nnorm) {
@@ -40,16 +34,7 @@ const nFormular = ({ n0, Nnorm, gcd, initGCD, p }) => {
   return results;
 };
 
-const solve = ({
-  n0,
-  p,
-  origin,
-  ans,
-  initGCD,
-  final = [],
-  result = [],
-  norm,
-}) => {
+const solve = ({ p, origin, ans, initGCD, final = [], result = [], norm }) => {
   if (p.length <= 1) {
     const reverse = result.reverse();
     const answer = ans / origin[0];
@@ -57,12 +42,6 @@ const solve = ({
     final_re.push(answer);
 
     final.push(final_re.concat(reverse));
-
-    // final.push(
-    //   ...twoFormular(ans, origin.slice(0, 2)).map((result) => {
-    //     return result.concat(reverse);
-    //   })
-    // );
 
     return final;
   }
@@ -76,10 +55,9 @@ const solve = ({
     Nnorm: norm[P0.length - 1],
     ans,
     gcd,
-    initGCD,
   }).map((nResult) => {
     const answer = ans - nResult * origin[P0.length - 1];
-    // console.log(p.slice(0, -1));
+
     solve({
       p: p.slice(0, -1),
       ans: answer,
@@ -94,6 +72,27 @@ const solve = ({
   return final;
 };
 
+module.exports.check = ({ p, ans }) => {
+  const { gcd, norm } = firstStep(p, ans);
+  const results = solve({ p, ans, origin: p, initGCD: gcd, norm });
+  const distances = [];
+  const finalAns = results.filter((result) => {
+    if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
+      return result;
+  });
+  finalAns.map((result) => {
+    const distance = result.reduce((acc, now) => acc + now * now, 0);
+    distances.push({ result, distance: distance });
+  });
+
+  const final = distances.sort((a, b) => a.distance - b.distance);
+  const takeAllSameDistance = final.filter(
+    (result, index) => result.distance === final[0].distance
+  );
+
+  return { finalAns, takeAllSameDistance };
+};
+
 // prompt.start();
 // prompt.get(["input"], (err, result) => {
 //   const { input } = result;
@@ -101,29 +100,24 @@ const solve = ({
 //   const p = inputs.slice(0, -1).map((data) => parseInt(data));
 //   const ans = inputs[inputs.length - 1];
 
+//   const distances = [];
+
 //   const { gcd, norm } = firstStep(p, ans);
 
 //   const results = solve({ p, ans, origin: p, initGCD: gcd, norm });
-//   console.log(results);
-//   // results.map((data) => console.log(data));
 
-//   // const finalAns = results.filter((result) => {
-//   //   if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
-//   //     return result;
-//   // });
-//   // console.log(finalAns);
+//   const finalAns = results.filter((result) => {
+//     if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
+//       return result;
+//   });
+//   finalAns.map((result) => {
+//     const distance = result.reduce((acc, now) => acc + now * now, 0);
+//     distances.push({ result, distance: distance });
+//   });
+//   const final = distances.sort((a, b) => a.distance - b.distance);
+//   console.log(final);
 //   // results.map((data) => {
 //   //   console.log(data);
 //   //   console.log(data.reduce((acc, now, index) => acc + now * p[index], 0));
 //   // });
 // });
-
-module.exports.check = ({ p, ans }) => {
-  const { gcd, norm } = firstStep(p, ans);
-  const results = solve({ p, ans, origin: p, initGCD: gcd, norm });
-  const finalAns = results.filter((result) => {
-    if (Number.isInteger(result.reduce((acc, now) => acc + now, 0)))
-      return result;
-  });
-  return finalAns;
-};
